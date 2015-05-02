@@ -27,4 +27,8 @@ class Database
 
         return $instance;
     }
+
+    public static function get_db(){
+        return self::$db;
+    }
 }

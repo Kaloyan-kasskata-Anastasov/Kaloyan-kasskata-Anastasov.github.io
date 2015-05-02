@@ -13,6 +13,9 @@ $controller = 'master';
 $method = 'index';
 $params = array();
 
+
+include_once 'config/db.php';
+include_once 'lib/database.php';
 include_once 'controllers/master.php';
 
 if (!empty($request)) {
@@ -50,3 +53,9 @@ if (method_exists($instance, $method)) {
     //TODO: Error Log
     call_user_func_array(array($instance, 'index'), array($params));
 }
+
+$db_object = \lib\Database::get_instance();
+
+var_dump($db_object::get_db());
+
+//
