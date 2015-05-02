@@ -14,6 +14,10 @@ class Master_Controller
         //echo "MASTER <br/>";
         $this->views_dir = $this->pr_view . $views_dir . '/';
 
-        $this->layout = DX_ROOT_DIR . 'views/layouts/default.php';
+        $this->layout = DX_ROOT_DIR . 'views\layouts\default.php';
+    }
+
+    public function index(){
+
     }
 }
