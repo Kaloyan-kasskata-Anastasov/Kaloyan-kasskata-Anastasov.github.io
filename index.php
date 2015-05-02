@@ -6,6 +6,7 @@ define('DX_ROOT_DIR', dirname(__FILE__) . '/');
 define('DX_ROOT_PATH', basename(dirname(__FILE__)) . '/');
 
 $PFX_CTRL = 'controllers/';
+$PFX_MODEL = 'models/';
 $PFX_PHP = '.php';
 $request = $_SERVER['REQUEST_URI'];
 $request_home = '/' . DX_ROOT_PATH;
@@ -17,6 +18,7 @@ $params = array();
 include_once 'config/db.php';
 include_once 'lib/database.php';
 include_once 'controllers/master.php';
+include_once 'models/master.php';
 
 if (!empty($request)) {
     if (0 == strpos($request, $request_home)) {
@@ -26,7 +28,6 @@ if (!empty($request)) {
         if (1 < count($components)) {
             if (strlen($components[0]) > 0) {
                 $controller = $components[0];
-                include_once $PFX_CTRL . $controller . $PFX_PHP;
             }
             if (strlen($components[1]) > 0) {
                 $method = $components[1];
@@ -35,6 +36,7 @@ if (!empty($request)) {
                 $params = $components[2];
             }
 
+            include_once $PFX_CTRL . $controller . $PFX_PHP;
         }
     }
 }

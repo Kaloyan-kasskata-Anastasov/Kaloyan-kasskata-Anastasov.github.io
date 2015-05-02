@@ -11,9 +11,11 @@ class Master_Model
 
     public function __construct($args = array())
     {
-        $args = array(
+        $default = array(
             'limit' => 0
         );
+
+        $args = array_merge($default, $args);
 
         if (!isset($args['table'])) {
             die('Table not defined');
@@ -48,6 +50,23 @@ class Master_Model
             $query .= " LIMIT $limit";
         }
 
-        $resultSet= $this->db->query($query);
+        $result_set = $this->db->query($query);
+
+        $results = $this->process_results($result_set);
+
+        return $results;
+    }
+
+    protected function process_results($result_set)
+    {
+        $results = array();
+
+        if (!empty($result_set) && $result_set->num_rows > 0) {
+            while ($row = $result_set->fetch_assoc()) {
+                $results[] = $row;
+            }
+        }
+
+        return $results;
     }
 }
