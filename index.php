@@ -17,6 +17,7 @@ $params = array();
 
 include_once 'config/db.php';
 include_once 'lib/database.php';
+include_once 'lib/authorization.php';
 include_once 'controllers/master.php';
 include_once 'models/master.php';
 
@@ -58,6 +59,6 @@ if (method_exists($instance, $method)) {
 
 $db_object = \lib\Database::get_instance();
 
-var_dump($db_object::get_db());
+//var_dump($db_object::get_db());
 
 //

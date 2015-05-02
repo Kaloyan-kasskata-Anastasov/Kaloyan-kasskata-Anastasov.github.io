@@ -30,6 +30,21 @@ class Master_Model
         $this->db = $db_object::get_db();
     }
 
+    public function get_by_id($id)
+    {
+        return $this->find(array('where' => 'id=' . $id));
+    }
+
+    public function get_by_title($title)
+    {
+        return $this->find(array('where' => "title='" . $title ."'"));
+    }
+
+    public function delete_by_id($id)
+    {
+        return $this->find(array('where' => 'id=' . $id));
+    }
+
     public function find($args = array())
     {
         $defaults = array(

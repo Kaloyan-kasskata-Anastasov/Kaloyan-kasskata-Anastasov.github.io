@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `blog`.`users` (
   `username` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NULL,
-  `register_on` TIMESTAMP NULL,
+  `register_on` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC))
 ENGINE = InnoDB;
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `blog`.`posts` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `title` TINYTEXT NOT NULL,
   `content` TEXT NOT NULL,
-  `created_on` TIMESTAMP NULL,
+  `created_on` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `is_hidden` TINYINT(1) NULL,
   `user_id` INT NOT NULL,
   PRIMARY KEY (`id`),
@@ -57,7 +57,7 @@ COLLATE = utf8_unicode_ci;
 CREATE TABLE IF NOT EXISTS `blog`.`comments` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `comment` MEDIUMTEXT NOT NULL,
-  `created_on` TIMESTAMP NULL,
+  `created_on` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   `post_id` INT NOT NULL,
   `user_id` INT NOT NULL,
   PRIMARY KEY (`id`),
