@@ -12,6 +12,7 @@ $request = $_SERVER['REQUEST_URI'];
 $request_home = '/' . DX_ROOT_PATH;
 $controller = 'master';
 $method = 'index';
+$admin_routing = false;
 $params = array();
 
 
@@ -24,6 +25,13 @@ include_once 'models/master.php';
 if (!empty($request)) {
     if (0 == strpos($request, $request_home)) {
         $request = substr($request, strlen($request_home));
+
+        if (strpos($request, 'admin/') === 0) {
+            $admin_routing = true;
+            include_once 'controllers/admin/master.php';
+            $request = substr($request, strlen('admin/'));
+        }
+
         $components = explode('/', $request, 3);
 
         if (1 < count($components)) {
@@ -37,17 +45,15 @@ if (!empty($request)) {
                 $params = $components[2];
             }
 
-            include_once $PFX_CTRL . $controller . $PFX_PHP;
+            $admin_folder = $admin_routing ? 'admin/' : '';
+
+            include_once $PFX_CTRL . $admin_folder . $controller . $PFX_PHP;
         }
     }
 }
 
-//var_dump($components);
-//var_dump($controller);
-//var_dump($method);
-//var_dump($params);
-
-$controller_class = '\Controllers\\' . ucfirst($controller) . '_Controller';
+$admin_namespace = $admin_routing ? '\Admin' : '';
+$controller_class = $admin_namespace . '\Controllers\\' . ucfirst($controller) . '_Controller';
 $instance = new $controller_class ();
 
 if (method_exists($instance, $method)) {
