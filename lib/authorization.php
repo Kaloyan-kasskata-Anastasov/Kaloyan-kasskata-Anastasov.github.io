@@ -10,7 +10,7 @@ class Auth
 
     private function __construct()
     {
-        session_set_cookie_params(2000, "/");
+        session_set_cookie_params(200000, "/");
         session_start();
 
         if (!empty($_SESSION['username'])) {
@@ -63,5 +63,10 @@ class Auth
             return true;
         }
         return false;
+    }
+
+    public function Logout()
+    {
+        session_destroy();
     }
 }

@@ -40,6 +40,30 @@ class Master_Model
         return $this->find(array('where' => "title='" . $title ."'"));
     }
 
+    public function get_user_by_username($name)
+    {
+        return $this->find(array('where' => "username='" . $name ."'"));
+    }
+
+    public function add($element)
+    {
+        $element['user_id'] = $_SESSION['user_id'];
+
+        $keys = array_keys($element);
+        $values = array();
+
+        foreach ($element as $key => $value) {
+            $values[] = '"'. $this->db->real_escape_string($value) . '"';
+        }
+
+        $keys = implode($keys, ', ');
+        $valuesQuery = implode($values, ', ');
+        $query = "INSERT INTO {$this->table}($keys) VALUES($valuesQuery)";
+        $this->db->query($query);
+
+        return $this->db->affected_rows;
+    }
+    
     public function delete_by_id($id)
     {
         return $this->find(array('where' => 'id=' . $id));
