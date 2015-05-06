@@ -26,9 +26,4 @@ class Master_Controller
 
         $this->layout = DX_ROOT_DIR . 'views\layouts\default.php';
     }
-
-    public function index()
-    {
-
-    }
 }

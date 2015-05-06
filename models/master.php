@@ -52,8 +52,14 @@ class Master_Model
         $result_set = $this->db->query($query);
 
         $results = $this->process_results($result_set);
-
+//        var_dump($query);
         return $results;
+    }
+
+    public function get_comments($id)
+    {
+        $this->table = 'comments';
+        return $this->find(array('where' => 'post_id=' . $id));
     }
 
     public function get_by_id($id)

@@ -3,13 +3,13 @@
 <?php foreach ($posts as $post) : ?>
     <ul>
         <li>
-            <?php echo addslashes($post["title"]);?>
+            <?php echo htmlentities($post["title"]);?>
         </li>
         <li>
-            <?php echo addslashes($post["content"]);?>
+            <?php echo htmlentities($post["content"]);?>
         </li>
         <li>
-            <?php echo addslashes($post["user_id"]);?>
+            <?php echo htmlentities($post["user_id"]);?>
         </li>
     </ul>
 <?php endforeach ?>
