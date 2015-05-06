@@ -2,7 +2,7 @@
     <ul>
         <li>
             <span>Title</span>
-            <input name="title" type="text"/>
+            <input name="title" value="" type="text"/>
         </li>
         <li>
             <span>Content</span>

@@ -37,12 +37,12 @@ class Master_Model
 
     public function get_by_title($title)
     {
-        return $this->find(array('where' => "title='" . $title ."'"));
+        return $this->find(array('where' => "title='" . $title . "'"));
     }
 
     public function get_user_by_username($name)
     {
-        return $this->find(array('where' => "username='" . $name ."'"));
+        return $this->find(array('where' => "username='" . $name . "'"));
     }
 
     public function add($element)
@@ -53,7 +53,7 @@ class Master_Model
         $values = array();
 
         foreach ($element as $key => $value) {
-            $values[] = '"'. $this->db->real_escape_string($value) . '"';
+            $values[] = '"' . $this->db->real_escape_string($value) . '"';
         }
 
         $keys = implode($keys, ', ');
@@ -63,7 +63,29 @@ class Master_Model
 
         return $this->db->affected_rows;
     }
-    
+
+    public function edit($element)
+    {
+        if (!isset($element['id'])) {
+            die('Wrong model');
+        }
+
+        $query = "UPDATE {$this->table} SET ";
+
+        foreach ($element as $key => $value) {
+            if ($key === 'id') {
+                continue;
+            }
+            $query .= "$key = '" . $this->db->real_escape_string($value . "'");
+
+            $query = rtrim($query, ',');
+
+            $query .= "WHERE id = {$element['id']}";
+
+            var_dump($query);
+        }
+    }
+
     public function delete_by_id($id)
     {
         return $this->find(array('where' => 'id=' . $id));

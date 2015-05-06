@@ -19,19 +19,52 @@ class Post_Controller extends Admin_Controller
 
     public function add()
     {
-        if (!empty($_POST['title']) && !empty($_POST['content'])) {
-            $title = $_POST['title'];
-            $content = $_POST['content'];
-            $post = array(
-                'title' => $title,
-                'content' => $content
-            );
-            $result = $this->model->add($post);
+        if (isset($_POST['content']) && isset($_POST['title'])) {
+            if (!empty($_POST['title']) && !empty($_POST['content'])) {
+                $title = $_POST['title'];
+                $content = $_POST['content'];
+                $post = array(
+                    'title' => $title,
+                    'content' => $content
+                );
+                $result = $this->model->add($post);
 
-            $_POST = array();
+                $_POST = array();
+
+                header("Location: " . trim($_SERVER['REQUEST_URI'], 'add'));
+            }
         }
 
         $template_name = DX_ROOT_DIR . $this->views_dir . 'add.php';
+        include_once $this->layout;
+    }
+
+    public function edit($id)
+    {
+        var_dump($_POST);
+        if (!empty($_POST['title']) &&
+            !empty($_POST['content']) &&
+            !empty($_POST['id'])) {
+
+            $title = $_POST['title'];
+            $content = $_POST['content'];
+            $id = $_POST['id'];
+            $post = array(
+                'title' => $title,
+                'content' => $content,
+                'id' => $id
+            );
+            $result = $this->model->edit($post);
+            header("Location: " . trim($_SERVER['REQUEST_URI'], 'edit'));
+        }
+
+        $post = $this->model->get_by_id($id);
+        if (empty($post)) {
+            die("Item with id {$id} doesnt exist.");
+        }
+        $post = $post[0];
+
+        $template_name = DX_ROOT_DIR . $this->views_dir . 'edit.php';
         include_once $this->layout;
     }
 
