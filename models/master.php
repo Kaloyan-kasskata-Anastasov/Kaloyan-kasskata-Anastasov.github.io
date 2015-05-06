@@ -4,9 +4,8 @@ namespace Models;
 
 class Master_Model
 {
-
     protected $table;
-    protected $limit;
+    protected $limit = 10;
     protected $db;
 
     public function __construct($args = array())
@@ -28,6 +27,33 @@ class Master_Model
 
         $db_object = \Lib\Database::get_instance();
         $this->db = $db_object::get_db();
+    }
+
+    public function find($args = array())
+    {
+        $defaults = array(
+            'table' => $this->table,
+            'limit' => $this->limit,
+            'where' => '',
+            'columns' => '*'
+        );
+
+        $args = array_merge($defaults, $args);
+        extract($args);
+        $query = "SELECT {$columns} FROM {$table}";
+
+        if (!empty($where)) {
+            $query .= " WHERE $where";
+        }
+        if (!empty($limit)) {
+            $query .= " LIMIT $limit";
+        }
+
+        $result_set = $this->db->query($query);
+
+        $results = $this->process_results($result_set);
+
+        return $results;
     }
 
     public function get_by_id($id)
@@ -64,7 +90,7 @@ class Master_Model
         return $this->db->affected_rows;
     }
 
-    public function edit($element)
+    public function update($element)
     {
         if (!isset($element['id'])) {
             die('Wrong model');
@@ -76,47 +102,24 @@ class Master_Model
             if ($key === 'id') {
                 continue;
             }
-            $query .= "$key = '" . $this->db->real_escape_string($value . "'");
-
-            $query = rtrim($query, ',');
-
-            $query .= "WHERE id = {$element['id']}";
-
-            var_dump($query);
+            $query .= "$key = '" . $this->db->real_escape_string($value) . "',";
         }
+        $query = rtrim($query, ',');
+
+        $query .= "WHERE id = {$element['id']}";
+
+        $this->db->query($query);
+
+        return $this->db->affected_rows;
     }
 
     public function delete_by_id($id)
     {
-        return $this->find(array('where' => 'id=' . $id));
+        $query = "DELETE FROM `blog`.`{$this->table}` WHERE `id`= " . $this->db->real_escape_string($id);
+        $this->db->query($query);
+        return $this->db->affected_rows;
     }
 
-    public function find($args = array())
-    {
-        $defaults = array(
-            'table' => $this->table,
-            'limit' => $this->limit,
-            'where' => '',
-            'columns' => '*'
-        );
-
-        $args = array_merge($defaults, $args);
-        extract($args);
-        $query = "SELECT {$columns} FROM {$table}";
-
-        if (!empty($where)) {
-            $query .= " WHERE $where";
-        }
-        if (!empty($limit)) {
-            $query .= " LIMIT $limit";
-        }
-
-        $result_set = $this->db->query($query);
-
-        $results = $this->process_results($result_set);
-
-        return $results;
-    }
 
     protected function process_results($result_set)
     {

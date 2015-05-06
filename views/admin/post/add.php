@@ -1,13 +1,12 @@
 <form method="POST">
     <ul>
         <li>
-            <span>Title</span>
-            <input name="title" value="" type="text"/>
+            <label >Title</label>
+            <input name="title" type="text"/>
         </li>
         <li>
             <span>Content</span>
-        <textarea name="content">
-        </textarea>
+        <textarea name="content"></textarea>
         </li>
         <li>
             <input type="submit"/>

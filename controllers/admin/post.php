@@ -41,30 +41,52 @@ class Post_Controller extends Admin_Controller
 
     public function edit($id)
     {
-        var_dump($_POST);
-        if (!empty($_POST['title']) &&
-            !empty($_POST['content']) &&
-            !empty($_POST['id'])) {
-
+        if (!empty($_POST['title']) && !empty($_POST['content'])) {
+            $id = $_POST['id'];
             $title = $_POST['title'];
             $content = $_POST['content'];
-            $id = $_POST['id'];
-            $post = array(
-                'title' => $title,
-                'content' => $content,
-                'id' => $id
-            );
-            $result = $this->model->edit($post);
-            header("Location: " . trim($_SERVER['REQUEST_URI'], 'edit'));
-        }
 
-        $post = $this->model->get_by_id($id);
-        if (empty($post)) {
-            die("Item with id {$id} doesnt exist.");
+            $post = array(
+                'id' => $id,
+                'title' => $title,
+                'content' => $content
+            );
+
+            $this->model->update($post);
+
+            $template_name = DX_ROOT_DIR . $this->views_dir . 'index.php';
+            include_once $this->layout;
         }
-        $post = $post[0];
+        $post_for_edit = $this->model->get_by_id($id);
+
+        if (empty($post_for_edit)) {
+            die("Nothing for edit.");
+        }
+        $post_for_edit = $post_for_edit[0];
 
         $template_name = DX_ROOT_DIR . $this->views_dir . 'edit.php';
+        include_once $this->layout;
+    }
+
+    public function delete($id)
+    {
+        if (!empty($_POST['id'])) {
+            $id = $_POST['id'];
+
+            $this->model->delete_by_id($id);
+
+            $template_name = DX_ROOT_DIR . $this->views_dir . 'index.php';
+            include_once $this->layout;
+        }
+
+        $post_for_delete = $this->model->get_by_id($id);
+
+        if (empty($post_for_delete)) {
+            die("Nothing for delete.");
+        }
+        $post_for_delete = $post_for_delete[0];
+
+        $template_name = DX_ROOT_DIR . $this->views_dir . 'delete.php';
         include_once $this->layout;
     }
 
