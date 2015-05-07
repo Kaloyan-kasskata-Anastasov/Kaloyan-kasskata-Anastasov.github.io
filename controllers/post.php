@@ -19,9 +19,12 @@ class Post_Controller extends Master_Controller
 
     public function get($id)
     {
-        $posts = $this->model->get_by_id($id);
+        $post = $this->model->get_by_id($id);
+        $post = $post[0];
         $comments = $this->model->get_comments($id);
-
+        $user_id = $post['user_id'];
+        $author = $this->model->get_author($user_id);
+        $author = $author[0];
         $template_name = DX_ROOT_DIR . $this->views_dir . 'get.php';
         include_once $this->layout;
     }

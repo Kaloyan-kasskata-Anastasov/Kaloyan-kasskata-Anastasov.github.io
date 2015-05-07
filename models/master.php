@@ -56,10 +56,26 @@ class Master_Model
         return $results;
     }
 
+    public function get_author($id)
+    {
+        $this->table = 'users';
+        return $this->find(array('where' => 'id=' . $id));
+    }
+
     public function get_comments($id)
     {
         $this->table = 'comments';
-        return $this->find(array('where' => 'post_id=' . $id));
+        $comments = $this->find(array('where' => 'post_id=' . $id));
+
+        foreach ($comments as &$comment) {
+            //die("NOT implemented DIE :D");
+            $author = $this->get_author($comment['user_id']);
+            $author = $author[0];
+            $comment['author'] = $author['username'];
+//            var_dump($comment);
+        }
+//        var_dump($comments);
+        return $comments;
     }
 
     public function get_by_id($id)
