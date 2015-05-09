@@ -3,13 +3,16 @@
 <?php foreach ($posts as $post) : ?>
     <ul>
         <li>
-            <?php echo htmlentities($post["title"]);?>
-        </li>
-        <li>
-            <?php echo htmlentities($post["content"]);?>
-        </li>
-        <li>
-            <?php echo htmlentities($post["user_id"]);?>
+            <h2><?php echo htmlentities($post["title"]); ?></h2>
+
+            <a href="/<?php echo DX_ROOT_PATH . "admin/post/edit/{$post['id']}" ?>">
+                Edit
+            </a>
+            <a href="/<?php echo DX_ROOT_PATH . "admin/post/delete/{$post['id']}" ?>">
+                Delete
+            </a>
+
+            <p><?php echo htmlentities($post["content"]); ?></p>
         </li>
     </ul>
 <?php endforeach ?>

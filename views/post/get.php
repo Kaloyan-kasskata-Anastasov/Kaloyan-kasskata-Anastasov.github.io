@@ -1,18 +1,24 @@
 <div class="post">
     <h2><?php echo htmlentities($post["title"]); ?></h2>
-    <span><?php echo htmlentities($post['created_on']);?></span>
+    <span><?php echo htmlentities($post['created_on']); ?></span>
     <br/>
-    <span>By: <?php echo htmlentities($author['username'])?></span>
+    <span>By: <?php echo htmlentities($author['username']) ?></span>
+
     <p><?php echo htmlentities($post["content"]) ?></p>
 </div>
-<div class="comment">
-    <?php foreach ($comments as $comment) : ?>
-        <span><?php echo htmlentities($comment["author"]) ?> says:</span>
+<?php foreach ($comments as $comment) : ?>
+    <div class="comment" >
+        <span style="border-bottom: 1px solid black">
+            <?php echo htmlentities($comment["author"])."( ".
+                htmlentities(explode(' ',$comment["created_on"])[1]) ." ".
+                htmlentities(explode(' ',$comment["created_on"])[0]) ." )"
+            ?> says:
+        </span>
         <article>
             <?php echo htmlentities($comment["comment"]) ?>
         </article>
-    <?php endforeach ?>
-</div>
+    </div>
+<?php endforeach ?>
 
 <form method="POST">
     <h2>Add a comment about this post:</h2>

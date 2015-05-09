@@ -71,7 +71,7 @@ class Comment_Controller extends Master_Controller
         $post_for_edit = $this->model->get_by_id($id);
 
         if (empty($post_for_edit)) {
-            die("Nothing for edit.");
+            echo ("Nothing for edit.");
         }
         $post_for_edit = $post_for_edit[0];
 
@@ -93,7 +93,7 @@ class Comment_Controller extends Master_Controller
         $post_for_delete = $this->model->get_by_id($id);
 
         if (empty($post_for_delete)) {
-            die("Nothing for delete.");
+            echo ("Nothing for delete.");
         }
         $post_for_delete = $post_for_delete[0];
 

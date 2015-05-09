@@ -1,7 +1,5 @@
 <?php
 
-//echo "Front controller router";
-
 define('DX_ROOT_DIR', dirname(__FILE__) . '/');
 define('DX_ROOT_PATH', basename(dirname(__FILE__)) . '/');
 
@@ -14,7 +12,6 @@ $controller = 'master';
 $method = 'index';
 $admin_routing = false;
 $params = array();
-
 
 include_once 'config/db.php';
 include_once 'lib/database.php';
@@ -59,7 +56,7 @@ $instance = new $controller_class ();
 if (method_exists($instance, $method)) {
     call_user_func_array(array($instance, $method), array($params));
 } else {
-    //TODO: Error Log
+    echo "Failed to log";
     call_user_func_array(array($instance, 'index'), array($params));
 }
 

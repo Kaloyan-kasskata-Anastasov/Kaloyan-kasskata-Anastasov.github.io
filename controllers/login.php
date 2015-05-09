@@ -22,13 +22,10 @@ class Login_Controller extends Master_Controller
             }
             else echo "<h2>Login Failed</h2>";
         }
-        if (empty($_POST['username'])) {
-            echo "<h2>Username is required</h2>";
+        if (empty($_POST['username']) || empty($_POST['password'])) {
+            echo "<h2>Username & Password is required</h2>";
         }
 
-        if (empty($_POST['password'])) {
-            echo "<h2>Password is required</h2>";
-        }
 
         $template_name = DX_ROOT_DIR . $this->views_dir . 'index.php';
         include_once $this->layout;

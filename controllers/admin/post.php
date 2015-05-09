@@ -51,13 +51,13 @@ class Post_Controller extends Admin_Controller
 
             $this->model->update($post);
 
-            $template_name = DX_ROOT_DIR . $this->views_dir . 'index.php';
+            header("Location: " . rtrim($_SERVER['REQUEST_URI'], 'post/edit/'.$id)."/post/");
             include_once $this->layout;
         }
         $post_for_edit = $this->model->get_by_id($id);
 
         if (empty($post_for_edit)) {
-            die("Nothing for edit.");
+            echo("Nothing for edit.");
         }
         $post_for_edit = $post_for_edit[0];
 
@@ -72,12 +72,11 @@ class Post_Controller extends Admin_Controller
 
             $this->model->delete_by_id($id);
 
-            $template_name = DX_ROOT_DIR . $this->views_dir . 'index.php';
+            header("Location: " . rtrim($_SERVER['REQUEST_URI'], 'post/delete/'.$id)."/post/");
             include_once $this->layout;
         }
 
         $post_for_delete = $this->model->get_by_id($id);
-
         if (empty($post_for_delete)) {
             die("Nothing for delete.");
         }
@@ -94,7 +93,6 @@ class Post_Controller extends Admin_Controller
         } else {
             $posts = $this->model->get_by_id($id);
         }
-//        var_dump($posts);
         $template_name = DX_ROOT_DIR . $this->views_dir . 'get.php';
         include_once $this->layout;
     }

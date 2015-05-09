@@ -12,19 +12,6 @@ class Post_Controller extends Master_Controller
     public function index($id)
     {
         $this->get($id);
-
-//        $posts = $this->model->find();
-//
-//        foreach ($posts as &$post) {
-//            $author = $this->model->get_author($post['user_id']);
-//            $post['author'] = $author[0]['username'];
-//        }
-//
-//        var_dump($posts);
-//
-//
-//        $template_name = DX_ROOT_DIR . $this->views_dir . 'index.php';
-//        include_once $this->layout;
     }
 
     public function get($id)
@@ -58,7 +45,7 @@ class Post_Controller extends Master_Controller
             $post = $this->model->get_by_id($id);
 
             if (empty($post)) {
-                die("Nothing to show.");
+                echo("Nothing to show.");
             }
 
             $post = $post[0];

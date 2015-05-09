@@ -12,11 +12,14 @@ class Logout_Controller extends Master_Controller
 
     public function index()
     {
-        echo "<h2>LOGOUT INDEX</h2>";
         if (!empty($_POST['yes'])) {
             $auth = \Lib\Auth::get_instance();
             var_dump($_POST);
             $auth->logout();
+            header("Location: " . rtrim($_SERVER['REQUEST_URI'], 'logout/')."/");
+        }
+
+        if (!empty($_POST['no'])) {
             header("Location: " . rtrim($_SERVER['REQUEST_URI'], 'logout/')."/");
         }
 

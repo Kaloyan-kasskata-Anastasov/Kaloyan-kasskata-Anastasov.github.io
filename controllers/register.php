@@ -25,8 +25,12 @@ class Register_Controller extends Master_Controller
             if ($result === 1) {
                 header("Location: " . rtrim($_SERVER['REQUEST_URI'], 'register/') . "/login/");
             } else {
-                echo "<h2>Username/Password Error, please try again</h2>";
+                echo "<h2>Username/Password issue, please try again</h2>";
             }
+        }
+
+        if (empty($_POST['username']) || empty($_POST['password'])) {
+            echo "<h2>Username and password is required. Type it both</h2>";
         }
 
         $template_name = DX_ROOT_DIR . $this->views_dir . 'index.php';

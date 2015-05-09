@@ -18,8 +18,7 @@ class Admin_Controller extends \Controllers\Master_Controller
         $logged_user = $auth->get_logged_user();
 
         if (empty($logged_user) || $logged_user['role']==='user') {
-            //TODO Messages
-            die("No Access");
+            header("Location: http://stream1.gifsoup.com/view/530748/stewie-kicking-ass-o.gif");
         }
     }
 
