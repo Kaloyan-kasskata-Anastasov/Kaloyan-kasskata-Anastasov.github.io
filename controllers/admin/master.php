@@ -17,14 +17,10 @@ class Admin_Controller extends \Controllers\Master_Controller
         $auth = \Lib\Auth::get_instance();
         $logged_user = $auth->get_logged_user();
 
-        if (empty($logged_user)) {
+        if (empty($logged_user) || $logged_user['role']==='user') {
             //TODO Messages
             die("No Access");
         }
     }
 
-    public function index()
-    {
-
-    }
 }

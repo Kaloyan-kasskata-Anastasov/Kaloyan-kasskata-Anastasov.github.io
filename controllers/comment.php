@@ -28,7 +28,7 @@ class Comment_Controller extends Master_Controller
         include_once $this->layout;
     }
 
-    public function add()
+    public function add($id_post)
     {
         if (isset($_POST['content']) && isset($_POST['title'])) {
             if (!empty($_POST['title']) && !empty($_POST['content'])) {

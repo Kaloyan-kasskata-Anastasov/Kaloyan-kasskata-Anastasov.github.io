@@ -50,9 +50,9 @@ class Master_Model
         }
 
         $result_set = $this->db->query($query);
-
-        $results = $this->process_results($result_set);
 //        var_dump($query);
+        $results = $this->process_results($result_set);
+
         return $results;
     }
 
@@ -68,7 +68,6 @@ class Master_Model
         $comments = $this->find(array('where' => 'post_id=' . $id));
 
         foreach ($comments as &$comment) {
-            //die("NOT implemented DIE :D");
             $author = $this->get_author($comment['user_id']);
             $author = $author[0];
             $comment['author'] = $author['username'];
@@ -77,6 +76,7 @@ class Master_Model
 //        var_dump($comments);
         return $comments;
     }
+
 
     public function get_by_id($id)
     {
@@ -95,7 +95,14 @@ class Master_Model
 
     public function add($element)
     {
-        $element['user_id'] = $_SESSION['user_id'];
+        var_dump($element);
+        if ($this->admin_authorize()) {
+            return ("<h2>You are not authorize to do that</h2>");
+        }
+
+        if ($this->table !== 'users') {
+            $element['user_id'] = $_SESSION['user_id'];
+        }
 
         $keys = array_keys($element);
         $values = array();
@@ -108,9 +115,18 @@ class Master_Model
         $valuesQuery = implode($values, ', ');
         $query = "INSERT INTO {$this->table}($keys) VALUES($valuesQuery)";
         $this->db->query($query);
-
+        var_dump($query);
+        var_dump($this->db->affected_rows);
         return $this->db->affected_rows;
+
     }
+
+    public function add_comment($comment)
+    {
+        $this->table = 'comments';
+        return $this->add($comment);
+    }
+
 
     public function update($element)
     {
@@ -154,5 +170,29 @@ class Master_Model
         }
 
         return $results;
+    }
+
+    public function register($user)
+    {
+        $this->table = 'users';
+        $query = array(
+            'table' => 'users',
+            'where' => "username='{$user['username']}'",
+            'columns' => 'username'
+        );
+        $username = $this->find($query);
+        if (!empty($username)) {
+            return -1;
+        } else {
+            return $this->add($user);
+        }
+    }
+
+    protected function admin_authorize()
+    {
+        if ($this->table === 'posts' && $_SESSION['role'] === 'user') {
+            return true;
+        }
+        return false;
     }
 }

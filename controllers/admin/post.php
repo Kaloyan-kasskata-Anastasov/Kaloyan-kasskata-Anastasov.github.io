@@ -9,12 +9,9 @@ class Post_Controller extends Admin_Controller
         parent::__construct(get_class(), 'post', 'admin/post');
     }
 
-    public function index()
+    public function index($id)
     {
-        //echo "INDEX";
-
-        $template_name = DX_ROOT_DIR . $this->views_dir . 'index.php';
-        include_once $this->layout;
+       $this->get($id);
     }
 
     public function add()

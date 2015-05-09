@@ -11,7 +11,6 @@ class Master_Controller
 
     public function __construct($class_name = '\Controllers\\Master_Controller', $model = 'master', $views_dir = 'master')
     {
-        //echo "MASTER <br/>";
         $this->views_dir = $this->pr_view . $views_dir . '/';
         $this->class_name = $class_name;
 
@@ -25,5 +24,10 @@ class Master_Controller
         $this->logged_user = $logged_user;
 
         $this->layout = DX_ROOT_DIR . 'views\layouts\default.php';
+    }
+
+    public function index()
+    {
+        header("Location: " . $_SERVER['REQUEST_URI']."post/");
     }
 }

@@ -1,9 +1,9 @@
-    </main>
-    </div>
-    <footer>
-        <h3>
-            Footer Here
-        </h3>
-    </footer>
+</main>
+</div>
+<footer>
+    <h3>
+        Software University Exam PHP Web Developing Defence
+    </h3>
+</footer>
 </body>
 </html>

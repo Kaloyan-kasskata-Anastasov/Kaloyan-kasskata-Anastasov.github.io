@@ -1,7 +1,7 @@
 <form method="POST">
     <ul>
         <li>
-        <textarea name="comment"></textarea>
+            <textarea name="comment" rows="40" cols="50"></textarea>
         </li>
         <li>
             <input type="submit"/>

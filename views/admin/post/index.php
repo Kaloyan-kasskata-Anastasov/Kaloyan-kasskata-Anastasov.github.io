@@ -13,3 +13,5 @@
         </li>
     </ul>
 <?php endforeach ?>
+
+<a href="add.php">Create new post</a>

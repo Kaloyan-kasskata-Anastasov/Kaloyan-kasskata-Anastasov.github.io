@@ -18,7 +18,8 @@ class Auth
 
             self::$logged_user = array(
                 'id' => $_SESSION['user_id'],
-                'username' => $_SESSION['username']
+                'username' => $_SESSION['username'],
+                'role' => $_SESSION['role']
             );
         }
     }
@@ -49,7 +50,7 @@ class Auth
         $db_object = \Lib\Database::get_instance();
         $db = $db_object->get_db();
 
-        $statement = $db->prepare("SELECT id, username FROM users WHERE username = ? AND password = ? LIMIT 1");
+        $statement = $db->prepare("SELECT id, username, role FROM users WHERE username = ? AND password = ? LIMIT 1");
 
         $statement->bind_param('ss', $username, $password);
         $statement->execute();
@@ -59,7 +60,7 @@ class Auth
         if ($row = $result_set->fetch_assoc()) {
             $_SESSION['username'] = $row['username'];
             $_SESSION['user_id'] = $row['id'];
-
+            $_SESSION['role'] = $row['role'];
             return true;
         }
         return false;
